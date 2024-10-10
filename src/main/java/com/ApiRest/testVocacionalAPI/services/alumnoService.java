@@ -71,4 +71,36 @@ public class alumnoService {
 
         return new ByteArrayInputStream(stream.toByteArray());
     }
+
+    public alumnoModel retornarAlumno(int id){
+        return repo.findById(id).get();
+    }
+
+    public void eliminarRegistro(alumnoModel alumno){
+        repo.delete(alumno);
+    }
+
+    public void guardarRegistro(alumnoModel alumno){
+        repo.save(alumno);
+    }
+
+    public alumnoModel DTOtoModel(alumnoDTO alumnoDTO){
+        alumnoModel alumno = new alumnoModel();
+        alumno.setNombre(alumnoDTO.getNombre());
+        alumno.setApellido(alumnoDTO.getApellido());
+        alumno.setMail(alumnoDTO.getMail());
+        alumno.setTelefono(alumnoDTO.getTelefono());
+        alumno.setAreaRecomendada(alumnoDTO.getAreaRecomendada());
+        return alumno;
+    }
+
+    public alumnoDTO ModelToDTO(alumnoModel alumno){
+        alumnoDTO alumnoDTO = new alumnoDTO();
+        alumnoDTO.setNombre(alumno.getNombre());
+        alumnoDTO.setApellido(alumno.getApellido());
+        alumnoDTO.setMail(alumno.getMail());
+        alumnoDTO.setTelefono(alumno.getTelefono());
+        alumnoDTO.setAreaRecomendada(alumno.getAreaRecomendada());
+        return alumnoDTO;
+    }
 }

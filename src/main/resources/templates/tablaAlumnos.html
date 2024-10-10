@@ -30,8 +30,11 @@
         <td th:text="${alumno.mail}"></td>
         <td th:text="${alumno.areaRecomendada}"></td>
         <td style="white-space:nowrap">
-            <a class="btn btn-primary btn-sm" th:href="@{/tablaAlumnos/edit(id=${alumno.idALumno})}">Editar</a>
-            <a class="btn btn-danger btn-sm" th:href="@{/tablaAlumnos/delete(id=${alumno.idALumno})}" onclick="return confirm('Estas seguro?')">Eliminar</a>
+            <a class="btn btn-primary btn-sm" th:href="@{/tablaAlumnos/edit/{id}(id=${alumno.idALumno})}">Editar</a>
+            <form th:action="@{/tablaAlumnos/delete/{id}(id=${alumno.idALumno})}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                <input type="hidden" name="_method" value="DELETE"/>
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+            </form>
         </td>
     </tr>
     </tbody>

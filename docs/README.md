@@ -1,11 +1,25 @@
 ---
+icon: atom
 description: >-
   Es un proyecto orientado en realizar un test vocacional en formato web,
   utilizando una breve encuesta y disponiendo que segun los gustos del usuario,
   se genera una recomendacion de áreas del rubro.
-icon: atom
-cover: .gitbook/assets/shutterstock_1078387013-scaled.jpg
+cover: .gitbook/assets/jvm.png
 coverY: 0
+layout:
+  cover:
+    visible: true
+    size: hero
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
 
 # Test Vocacional de Programación

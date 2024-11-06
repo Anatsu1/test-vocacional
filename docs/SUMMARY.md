@@ -17,3 +17,7 @@
   * [Controladores](documentacion-del-codigo/implementacion-y-utilidades/controladores/README.md)
     * [AlumnoController](documentacion-del-codigo/implementacion-y-utilidades/controladores/alumnocontroller.md)
   * [Test](documentacion-del-codigo/implementacion-y-utilidades/test.md)
+
+## Funcionamiento
+
+* [Funcionamiento Web](funcionamiento/funcionamiento-web.md)

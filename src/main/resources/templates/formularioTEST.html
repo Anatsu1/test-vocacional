@@ -7,157 +7,207 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            color: #343a40;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: 500;
+        }
+        #bttnSubmit, #bttnRehacer {
+            font-size: 1.1rem;
+        }
+        #bttnSubmit {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        #bttnRehacer {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        #bttnSubmit:hover, #bttnRehacer:hover {
+            opacity: 0.9;
+        }
+        #resultado {
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.2rem;
+            color: #28a745;
+            font-weight: bold;
+        }
+        a.btn-back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            background-color: #343a40;
+            color: #ffffff;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-            <h1 class="text-center mb-4">Test Vocacional de Programación</h1>
+    <div class="form-container">
+        <h1 class="text-center mb-4">Test Vocacional de Programación</h1>
 
-            <form id="testForm" class="p-4 border rounded shadow-sm bg-light">
-                <!-- Datos del estudiante -->
-                <h2 class="mb-4 text-center">Datos del Estudiante</h2>
-                <div class="form-group">
+        <form id="testForm" class="p-4">
+            <!-- Datos del estudiante -->
+            <h2 class="mb-4 text-center">Datos del Estudiante</h2>
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label for="apellido">Apellido</label>
                     <input type="text" class="form-control" id="apellido" required>
                 </div>
-                <div class="form-group">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
                     <label for="telefono">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label for="email">Correo electrónico</label>
                     <input type="email" class="form-control" id="email" required>
                 </div>
+            </div>
 
-                <hr>
-                <h2 class="mb-4 text-center">Responde las siguientes preguntas</h2>
+            <hr>
+            <h2 class="mb-4 text-center">Responde las siguientes preguntas</h2>
 
-                <!-- Preguntas del test -->
-                <div class="form-group">
-                    <label>1. ¿Cómo prefieres abordar un nuevo proyecto?</label>
-                    <select class="form-control" id="p1" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="creatividad">Experimentando con nuevas ideas y formas de hacer las cosas</option>
-                        <option value="logica">Pensando en cómo organizarlo de manera lógica</option>
-                        <option value="abstraccion">Desarrollando una visión general antes de profundizar en detalles</option>
-                        <option value="eficiencia">Tomando un enfoque práctico para ver resultados pronto</option>
-                    </select>
-                </div>
+            <!-- Preguntas del test -->
+            <div class="form-group">
+                <label>1. ¿Cómo prefieres abordar un nuevo proyecto?</label>
+                <select class="form-control" id="p1" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="creatividad">Experimentando con nuevas ideas y formas de hacer las cosas</option>
+                    <option value="logica">Pensando en cómo organizarlo de manera lógica</option>
+                    <option value="abstraccion">Desarrollando una visión general antes de profundizar en detalles</option>
+                    <option value="eficiencia">Tomando un enfoque práctico para ver resultados pronto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>2. ¿Cómo te enfrentas a un problema difícil?</label>
+                <select class="form-control" id="p2" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="abstraccion">Analizo el problema en su conjunto</option>
+                    <option value="logica">Resuelvo con una estructuras y patrones</option>
+                    <option value="eficiencia">Busco una solución práctica y eficiente</option>
+                    <option value="creatividad">Intento encontrar una solución innovadora</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>2. ¿Cómo te enfrentas a un problema difícil?</label>
-                    <select class="form-control" id="p2" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="abstraccion">Analizo el problema en su conjunto</option>
-                        <option value="logica">Resuelvo con una estructuras y patrones</option>
-                        <option value="eficiencia">Busco una solución práctica y eficiente</option>
-                        <option value="creatividad">Intento encontrar una solución innovadora</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>3. ¿Qué te motiva más al trabajar en un proyecto?</label>
+                <select class="form-control" id="p3" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="abstraccion">Ver el panorama completo y cómo las piezas encajan</option>
+                    <option value="creatividad">La oportunidad de ser creativo y ofrecer algo visualmente atractivo</option>
+                    <option value="eficiencia">Conseguir resultados funcionales</option>
+                    <option value="logica">La satisfacción de resolver problemas complejos con la lógica</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>3. ¿Qué te motiva más al trabajar en un proyecto?</label>
-                    <select class="form-control" id="p3" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="abstraccion">Ver el panorama completo y cómo las piezas encajan</option>
-                        <option value="creatividad">La oportunidad de ser creativo y ofrecer algo visualmente atractivo</option>
-                        <option value="eficiencia">Conseguir resultados funcionales</option>
-                        <option value="logica">La satisfacción de resolver problemas complejos con la lógica</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>4. ¿Qué prefieres al aprender una nueva habilidad?</label>
+                <select class="form-control" id="p4" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="creatividad">Probar cosas nuevas por mi cuenta</option>
+                    <option value="eficiencia">Aprender haciendo, poniendo las manos a la obra</option>
+                    <option value="logica">Seguir un camino estructurado y preestablecido</option>
+                    <option value="abstraccion">Entender primero los conceptos abstractos</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>4. ¿Qué prefieres al aprender una nueva habilidad?</label>
-                    <select class="form-control" id="p4" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="creatividad">Probar cosas nuevas por mi cuenta</option>
-                        <option value="eficiencia">Aprender haciendo, poniendo las manos a la obra</option>
-                        <option value="logica">Seguir un camino estructurado y preestablecido</option>
-                        <option value="abstraccion">Entender primero los conceptos abstractos</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>5. ¿Qué tipo de proyectos te gustaría desarrollar?</label>
+                <select class="form-control" id="p5" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="eficiencia">Algo funcional que las personas puedan usar de inmediato</option>
+                    <option value="logica">Proyectos que me desafíen a resolver problemas difíciles</option>
+                    <option value="abstraccion">Sistemas complejos que requieran una visión abstracta</option>
+                    <option value="creatividad">Algo que sea visualmente atractivo e innovador</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>5. ¿Qué tipo de proyectos te gustaría desarrollar?</label>
-                    <select class="form-control" id="p5" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="eficiencia">Algo funcional que las personas puedan usar de inmediato</option>
-                        <option value="logica">Proyectos que me desafíen a resolver problemas difíciles</option>
-                        <option value="abstraccion">Sistemas complejos que requieran una visión abstracta</option>
-                        <option value="creatividad">Algo que sea visualmente atractivo e innovador</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>6. ¿Qué disfrutas más en el proceso del desarrollo de un proyecto?</label>
+                <select class="form-control" id="p6" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="logica">Implementar algoritmos eficientes que resuelvan problemas complejos</option>
+                    <option value="creatividad">Crear interfaces o diseños que se vean bien</option>
+                    <option value="eficiencia">Ver resultados tangibles rápidamente</option>
+                    <option value="abstraccion">Desarrollar la arquitectura general del sistema</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>6. ¿Qué disfrutas más en el proceso del desarrollo de un proyecto?</label>
-                    <select class="form-control" id="p6" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="logica">Implementar algoritmos eficientes que resuelvan problemas complejos</option>
-                        <option value="creatividad">Crear interfaces o diseños que se vean bien</option>
-                        <option value="eficiencia">Ver resultados tangibles rápidamente</option>
-                        <option value="abstraccion">Desarrollar la arquitectura general del sistema</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>7. ¿Qué valoras más al trabajar en equipo?</label>
+                <select class="form-control" id="p7" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="abstraccion">Desarrollar soluciones que sean escalables y eficientes</option>
+                    <option value="creatividad">Aportar ideas frescas y que salgan de la norma</option>
+                    <option value="logica">Resolver problemas de manera estructurada y metódica</option>
+                    <option value="eficiencia">Asegurar que el proyecto avance con resultados prácticos</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>7. ¿Qué valoras más al trabajar en equipo?</label>
-                    <select class="form-control" id="p7" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="abstraccion">Desarrollar soluciones que sean escalables y eficientes</option>
-                        <option value="creatividad">Aportar ideas frescas y que salgan de la norma</option>
-                        <option value="logica">Resolver problemas de manera estructurada y metódica</option>
-                        <option value="eficiencia">Asegurar que el proyecto avance con resultados prácticos</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>8. ¿Cómo prefieres enfocar tu proyecto?</label>
+                <select class="form-control" id="p8" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="eficiencia">Funcional, sin perder tiempo en detalles innecesarios</option>
+                    <option value="logica">Utilizando estructuras lógicas claras y optimizadas</option>
+                    <option value="creatividad">De manera que sea fácil de entender y organizado</option>
+                    <option value="abstraccion">Con una arquitectura sólida que se pueda escalar a largo plazo</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>8. ¿Cómo prefieres enfocar tu proyecto?</label>
-                    <select class="form-control" id="p8" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="eficiencia">Funcional, sin perder tiempo en detalles innecesarios</option>
-                        <option value="logica">Utilizando estructuras lógicas claras y optimizadas</option>
-                        <option value="creatividad">De manera que sea fácil de entender y organizado</option>
-                        <option value="abstraccion">Con una arquitectura sólida que se pueda escalar a largo plazo</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>9. ¿Qué prefieres al evaluar el éxito de un proyecto?</label>
+                <select class="form-control" id="p9" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="logica">Que la solución sea eficiente</option>
+                    <option value="abstraccion">Que la arquitectura sea robusta</option>
+                    <option value="creatividad">Que el diseño sea innovador</option>
+                    <option value="eficiencia">Que funcione de manera práctica y sea útil en la vida diaria</option>
+                </select>
+            </div>
 
-                <div class="form-group">
-                    <label>9. ¿Qué prefieres al evaluar el éxito de un proyecto?</label>
-                    <select class="form-control" id="p9" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="logica">Que la solución sea eficiente</option>
-                        <option value="abstraccion">Que la arquitectura sea robusta</option>
-                        <option value="creatividad">Que el diseño sea innovador</option>
-                        <option value="eficiencia">Que funcione de manera práctica y sea útil en la vida diaria</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>10. ¿Cómo te enfrentas a cambios inesperados en un proyecto?</label>
+                <select class="form-control" id="p10" required>
+                    <option value="" selected disabled hidden>Selecciona una opción</option>
+                    <option value="creatividad">Los veo como una oportunidad para ser más flexible y me adapto</option>
+                    <option value="eficiencia">Busco soluciones rápidas y prácticas para seguir avanzando</option>
+                    <option value="abstraccion">Reevalúo el sistema completo y ajusto la arquitectura</option>
+                    <option value="logica">Los enfrento rediseñando la lógica del proyecto de manera organizada</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-4" id="bttnSubmit">Enviar respuestas</button>
+        </form>
 
-                <div class="form-group">
-                    <label>10. ¿Cómo te enfrentas a cambios inesperados en un proyecto?</label>
-                    <select class="form-control" id="p10" required>
-                        <option value="" selected disabled hiden></option>
-                        <option value="creatividad">Los veo como una oportunidad para ser más flexible y me adapto</option>
-                        <option value="eficiencia">Busco soluciones rápidas y prácticas para seguir avanzando</option>
-                        <option value="abstraccion">Reevalúo el sistema completo y ajusto la arquitectura</option>
-                        <option value="logica">Los enfrento rediseñando la lógica del proyecto de manera organizada</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block" id="bttnSubmit">Enviar respuestas</button>
-            </form>
-
-            <!-- Resultado -->
-            <div id="resultado" class="mt-5"></div>
-            <button onclick="reiniciar()" class="btn btn-secondary btn-block" id="bttnRehacer">Rehacer</button>
-        </div>
+        <!-- Resultado -->
+        <div id="resultado" class="mt-5"></div>
+        <button onclick="reiniciar()" class="btn btn-secondary btn-block mt-2" id="bttnRehacer">Rehacer</button>
     </div>
 </div>
-<a href=".." class="btn btn-primary">VOLVER</a>
+<a href=".." class="btn btn-back mt-4">VOLVER</a>
 <script src="../js/script.js"></script>
 </body>
 </html>

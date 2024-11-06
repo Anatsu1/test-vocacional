@@ -10,10 +10,6 @@ public class alumnoDTO {
     private String mail;
     private String areaRecomendada;
 
-
-    public List<String> respuestas = new ArrayList<String>();
-
-
     public String getNombre() {
         return nombre;
     }

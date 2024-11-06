@@ -4,16 +4,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "alumnos")
+@Table(name = "alumnos") // La tabla en la base de datos a la que se mapea esta entidad.
 public class alumnoModel {
-    @Id
+
+    @Id // Define la clave primaria de la entidad.
     private int idALumno;
     private String nombre;
     private String apellido;
     private String telefono;
     private String mail;
-    private String areaRecomendada = "vacio";
+    private String areaRecomendada = "vacio"; // Valor por defecto para el área recomendada.
 
+    // Métodos getter y setter para cada atributo.
     public int getIdALumno() {
         return idALumno;
     }

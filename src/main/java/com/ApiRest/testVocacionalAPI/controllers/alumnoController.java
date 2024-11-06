@@ -1,6 +1,4 @@
 package com.ApiRest.testVocacionalAPI.controllers;
-
-
 import com.ApiRest.testVocacionalAPI.models.alumnoDTO;
 import com.ApiRest.testVocacionalAPI.models.alumnoModel;
 import com.ApiRest.testVocacionalAPI.services.alumnoService;
@@ -14,95 +12,100 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class alumnoController {
-    @Autowired
-    alumnoService servicio;
 
+    @Autowired
+    alumnoService servicio; // Inyección de dependencia del servicio para acceder a la lógica de negocio.
+
+    // Muestra el formulario para ingresar un nuevo alumno.
     @GetMapping("/test")
-    public String mostrarFormulario(Model model){
+    public String mostrarFormulario(Model model) {
         alumnoDTO alumnodto = new alumnoDTO();
-        model.addAttribute("alumnoDTO",alumnodto);
-        return "formularioTEST";
+        model.addAttribute("alumnoDTO", alumnodto); // Se agrega un objeto DTO vacío al modelo.
+        return "formularioTEST"; // Retorna la vista para el formulario.
     }
+
+    // Recibe los datos del alumno desde el formulario y guarda el alumno.
     @PostMapping("/test")
-    public ResponseEntity<Map<String, String>> recibirAlumno(@RequestBody alumnoDTO alumnoDTO){
+    public ResponseEntity<Map<String, String>> recibirAlumno(@RequestBody alumnoDTO alumnoDTO) {
         Map<String, String> response = new HashMap<>();
         try {
-            servicio.saveAlumno(alumnoDTO);
+            servicio.saveAlumno(alumnoDTO); // Guarda el alumno usando el servicio.
             response.put("message", "Alumno guardado exitosamente");
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response); // Respuesta exitosa.
         } catch (Exception e) {
             response.put("message", "Error al guardar el alumno");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // Respuesta con error.
         }
     }
 
+    // Muestra la tabla de todos los alumnos.
     @GetMapping("tablaAlumnos")
-    public String mostrarTablaAlumnos(Model model){
-        List<alumnoModel> alumnos = servicio.devolverAlumnos();
-        model.addAttribute("alumnos",alumnos);
-        return "tablaAlumnos";
+    public String mostrarTablaAlumnos(Model model) {
+        List<alumnoModel> alumnos = servicio.devolverAlumnos(); // Obtiene todos los alumnos.
+        model.addAttribute("alumnos", alumnos); // Agrega la lista de alumnos al modelo.
+        return "tablaAlumnos"; // Retorna la vista de la tabla de alumnos.
     }
 
+    // Exporta los datos de los alumnos a un archivo Excel.
     @GetMapping("tablaAlumnos/exportar")
     public ResponseEntity<InputStreamResource> exportarTodosDatos() {
-        ByteArrayInputStream stream = servicio.exportarDatos();
+        ByteArrayInputStream stream = servicio.exportarDatos(); // Obtiene el archivo Excel con los datos.
         HttpHeaders header = new HttpHeaders();
-        header.add("Content-Disposition", "attachment; filename=alumnos.xlsx");
-        return ResponseEntity.ok().headers(header).body(new InputStreamResource(stream));
+        header.add("Content-Disposition", "attachment; filename=alumnos.xlsx"); // Define el nombre del archivo descargable.
+        return ResponseEntity.ok().headers(header).body(new InputStreamResource(stream)); // Retorna el archivo como un flujo de datos.
     }
 
-
+    // Muestra el formulario para editar un alumno específico.
     @GetMapping("tablaAlumnos/edit/{id}")
-    public String mostrarModificacionREgistro(Model model, @PathVariable int id) {
+    public String mostrarModificacionRegistro(Model model, @PathVariable int id) {
         try {
-            alumnoModel alumno = servicio.retornarAlumno(id);
+            alumnoModel alumno = servicio.retornarAlumno(id); // Obtiene el alumno por ID.
             model.addAttribute("alumno", alumno);
 
-            alumnoDTO alumnoDTO = new alumnoDTO();
-            alumnoDTO = servicio.ModelToDTO(alumno);
+            alumnoDTO alumnoDTO = servicio.ModelToDTO(alumno); // Convierte el modelo de alumno a DTO para editar.
             model.addAttribute("alumnoDTO", alumnoDTO);
         } catch (Exception e) {
             System.out.println("Excepción: " + e.getMessage());
-            return "redirect:/tablaAlumnos";
+            return "redirect:/tablaAlumnos"; // Si hay error, redirige a la lista de alumnos.
         }
-        return "productos/editarRegistro";  // Asegúrate que esta vista existe
+        return "productos/editarRegistro"; // Retorna la vista para editar el registro.
     }
 
+    // Actualiza los datos del alumno luego de la modificación.
     @PostMapping("tablaAlumnos/edit/{id}")
-    public String actualizarProducto(Model model, @PathVariable int id, @Valid @ModelAttribute alumnoDTO alumnoDTO, BindingResult result){
-        try{
-            alumnoModel alumno = servicio.retornarAlumno(id);
-            model.addAttribute("alumno",alumno);
-            if(result.hasErrors()){
-                return "tablaAlumnos/editarRegistro";
-            }
-            alumno = servicio.DTOtoModel(alumnoDTO);
-            servicio.guardarRegistro(alumno);
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        }
-        return "redirect:/tablaAlumnos";
-    }
-    @PostMapping("tablaAlumnos/delete/{id}")
-    public String eliminarProducto(@PathVariable int id) {
+    public String actualizarAlumno(Model model, @PathVariable int id, @Valid @ModelAttribute alumnoDTO alumnoDTO, BindingResult result) {
         try {
-            alumnoModel alumno = servicio.retornarAlumno(id);
-            servicio.eliminarRegistro(alumno);
+            alumnoModel alumno = servicio.retornarAlumno(id); // Obtiene el alumno por ID.
+            model.addAttribute("alumno", alumno);
+
+            if (result.hasErrors()) {
+                return "tablaAlumnos/editarRegistro"; // Si hay errores en el formulario, vuelve a la vista de edición.
+            }
+
+            alumno = servicio.DTOtoModel(alumnoDTO); // Convierte el DTO a modelo de alumno.
+            servicio.guardarRegistro(alumno); // Guarda o actualiza el alumno.
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e); // Manejo de excepciones.
+        }
+        return "redirect:/tablaAlumnos"; // Redirige a la lista de alumnos después de la actualización.
+    }
+
+    // Elimina un alumno por su ID.
+    @PostMapping("tablaAlumnos/delete/{id}")
+    public String eliminarAlumno(@PathVariable int id) {
+        try {
+            alumnoModel alumno = servicio.retornarAlumno(id); // Obtiene el alumno por ID.
+            servicio.eliminarRegistro(alumno); // Elimina el alumno.
         } catch (Exception e) {
             System.out.println("Error al eliminar registro: " + e.getMessage());
         }
-        return "redirect:/tablaAlumnos";
+        return "redirect:/tablaAlumnos"; // Redirige a la lista de alumnos después de eliminar.
     }
-
 }

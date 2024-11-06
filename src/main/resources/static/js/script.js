@@ -1,13 +1,15 @@
+// Escucha el evento de envío del formulario
 document.getElementById('testForm').addEventListener('submit', function(event) {
+    // Evita que el formulario se envíe de forma tradicional, para manejar el proceso con JavaScript
     event.preventDefault();
 
-    // Capturar los datos del formulario
+    // Captura los datos del formulario (nombre, apellido, teléfono y correo electrónico)
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value;
     const telefono = document.getElementById('telefono').value;
     const email = document.getElementById('email').value;
 
-    // Capturar las respuestas del test
+    // Captura las respuestas del test (p1 a p10)
     const p1 = document.getElementById('p1').value;
     const p2 = document.getElementById('p2').value;
     const p3 = document.getElementById('p3').value;
@@ -19,25 +21,28 @@ document.getElementById('testForm').addEventListener('submit', function(event) {
     const p9 = document.getElementById('p9').value;
     const p10 = document.getElementById('p10').value;
 
-    // Calcular resultados
+    // Inicializa los puntajes para cada área
     let creatividad = 0;
     let logica = 0;
     let abstraccion = 0;
     let eficiencia = 0;
 
-    // Sumar puntaje en base a las respuestas
+    // Crea un arreglo con las respuestas del test
     const respuestas = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
+    
+    // Recorre las respuestas y aumenta el puntaje correspondiente según el área seleccionada por el usuario
     respuestas.forEach(respuesta => {
-      if (respuesta === "creatividad") creatividad++;
-      if (respuesta === "logica") logica++;
-      if (respuesta === "abstraccion") abstraccion++;
-      if (respuesta === "eficiencia") eficiencia++;
+      if (respuesta === "creatividad") creatividad++; // Si la respuesta es "creatividad", incrementa el puntaje de creatividad
+      if (respuesta === "logica") logica++; // Si la respuesta es "logica", incrementa el puntaje de lógica
+      if (respuesta === "abstraccion") abstraccion++; // Si la respuesta es "abstraccion", incrementa el puntaje de abstracción
+      if (respuesta === "eficiencia") eficiencia++; // Si la respuesta es "eficiencia", incrementa el puntaje de eficiencia
     });
 
-    // Determinar el área con mayor puntaje
+    // Variables para determinar el área con mayor puntaje y la recomendación asociada
     let areaMayor = '';
     let recomendacion = '';
 
+    // Determina el área con el mayor puntaje
     if (creatividad >= logica && creatividad >= abstraccion && creatividad >= eficiencia) {
       areaMayor = "Creatividad: Desarrollo Web/Videojuegos/Realidad Virtual y Aumentada";
       recomendacion = `
@@ -116,42 +121,29 @@ document.getElementById('testForm').addEventListener('submit', function(event) {
           </div>`;
     }
 
-    // Mostrar resultado
+    // Muestra el resultado del test y las recomendaciones en el HTML
     const resultadoDiv = document.getElementById('resultado');
     resultadoDiv.innerHTML = `
-      <h3>¡Hola ${nombre} ${apellido}!</h3>
-      <p>Resultados del test:</p>
-      <ul>
-        <li>Creatividad: ${creatividad}</li>
-        <li>Lógica: ${logica}</li>
-        <li>Abstracción: ${abstraccion}</li>
-        <li>Eficiencia: ${eficiencia}</li>
-      </ul>
-      <p>Tu resultado principal está en el área de <strong>${areaMayor}</strong>.</p>
-      ${recomendacion}
-      <h4><strong>UTN</strong> Información de contacto</h4>
-      <p>Recorda que para tener la mejor base en programacion, para vos y tu futuro, veni a estudiar con nosotros a la UTN Extension Aulica Necochea.</p>
-      <p>Aprenderas todo lo necesario para tu carrera profesional, con excelentes profesores y la mejor atencion.</p>
-      <p>Coordinadora General | <strong>Marcela Abete</strong> | </p>
-      <p>Teléfono: 2262 59-2103</p>
-      <p>Instagram: extensioneco_utn</p>
-      <h3><strong>UTN APRENDEMOS DEL MAR<strong></h4>
+        <h3>¡Hola ${nombre} ${apellido}!</h3>
+        <p>Resultados del test:</p>
+        <p><strong>Área recomendada:</strong> ${areaMayor}</p>
+        <p>${recomendacion}</p>
     `;
-    resultadoDiv.focus();
+
+    // Deshabilita el botón de enviar para evitar que el formulario se envíe nuevamente
     document.getElementById("bttnSubmit").disabled = true;
-    document.getElementById("bttnSubmit").className = "btn btn-secondary btn-block";
-    document.getElementById("bttnRehacer").className = "btn btn-primary btn-block";
+    document.getElementById("bttnSubmit").className = "btn btn-secondary btn-block"; // Cambia el estilo del botón de submit
+    document.getElementById("bttnRehacer").className = "btn btn-primary btn-block"; // Habilita el botón de reiniciar
 
-        // Crear el objeto JSON para enviar
-        const alumnoDTO = {
-          nombre: nombre,
-          apellido: apellido,
-          telefono: telefono,
-          mail: email,
-          areaRecomendada: areaMayor
-        };
+    // Envía los datos al servidor mediante una solicitud POST
+    const alumnoDTO = {
+        nombre: nombre,
+        apellido: apellido,
+        telefono: telefono,
+        mail: email,
+        areaRecomendada: areaMayor
+    };
 
-        // Enviar el JSON en una petición POST
     fetch('http://localhost:8080/test', {
         method: 'POST',
         headers: {
@@ -160,21 +152,23 @@ document.getElementById('testForm').addEventListener('submit', function(event) {
         body: JSON.stringify(alumnoDTO),
     })
     .then(response => {
+        // Verifica si la respuesta del servidor fue exitosa
         if (!response.ok) {
-            // Si la respuesta no es exitosa (códigos 4xx o 5xx)
             throw new Error(`Error del servidor: ${response.status}`);
         }
-        return response.json(); // Solo intenta parsear si el response es OK
+        return response.json(); // Si la respuesta es exitosa, devuelve los datos
     })
     .then(data => {
+        // Maneja la respuesta del servidor
         console.log('Éxito:', data);
     })
     .catch((error) => {
+        // Si ocurre un error, lo muestra en la consola
         console.error('Error:', error);
     });
+});
 
-  });
-
+// Función para reiniciar el formulario
 function reiniciar(){
-    window.location.href="http://localhost:8080/test";
+    window.location.href="http://localhost:8080/test"; // Redirige a la página de inicio para reiniciar el test
 }

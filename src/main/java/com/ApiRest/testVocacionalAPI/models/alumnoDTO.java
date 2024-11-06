@@ -1,8 +1,5 @@
 package com.ApiRest.testVocacionalAPI.models;
-
-import java.util.ArrayList;
-import java.util.List;
-
+//Este código define un DTO para transferir información del alumno sin involucrar la entidad completa de la base de datos
 public class alumnoDTO {
     private String nombre;
     private String apellido;
@@ -10,6 +7,7 @@ public class alumnoDTO {
     private String mail;
     private String areaRecomendada;
 
+    // Métodos getter y setter para cada atributo.
     public String getNombre() {
         return nombre;
     }
